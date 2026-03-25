@@ -84,15 +84,7 @@ nav.sc{height:56px;box-shadow:0 4px 24px rgba(0,0,0,.3)}
 .modal-body p{color:var(--tmid);font-size:.87rem;line-height:1.85;margin-bottom:10px}
 .cert-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
 .cert-tag{background:rgba(184,150,62,.12);color:#7a5c10;font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:4px}
-.srv-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
-.srv-tab{background:var(--off);border:1.5px solid var(--border);color:var(--navy);font-size:.78rem;font-weight:600;padding:8px 16px;border-radius:5px;cursor:pointer;transition:all .2s;font-family:"Inter",sans-serif}
-.srv-tab:hover,.srv-tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-.srv-panel{display:none}
-.srv-panel.active{display:grid;grid-template-columns:1fr 1.6fr;gap:40px;align-items:start}
-.srv-icon-box{background:var(--navy);border-radius:10px;padding:40px;text-align:center;position:sticky;top:90px}
-.srv-icon-box .ico{font-size:3rem;margin-bottom:16px}
-.srv-icon-box h2{font-family:"Merriweather",serif;color:#fff;font-size:1.1rem;font-weight:700;margin-bottom:10px}
-.srv-icon-box p{color:rgba(255,255,255,.55);font-size:.82rem;line-height:1.75}
+
 .srv-detail h3{font-family:"Merriweather",serif;color:var(--navy);font-size:1rem;font-weight:700;margin-bottom:16px;border-bottom:2px solid var(--gold);padding-bottom:10px}
 .srv-detail ul{list-style:none;padding:0}
 .srv-detail ul li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);color:var(--tmid);font-size:.86rem;line-height:1.6}
@@ -266,6 +258,16 @@ nav{padding:0 16px}.nl li:not(.cta){display:none}
 .modal-body h4{color:#8B0000 !important;border-left-color:#8B0000 !important}
 .modal-body p,.modal-body li{color:#1A1A1A !important}
 
+
+/* ── Gallery ── */
+.gallery-tab{background:#fff;border:1.5px solid rgba(139,0,0,.3);color:#8B0000;font-size:.78rem;font-weight:600;padding:8px 20px;border-radius:30px;cursor:pointer;transition:all .2s;font-family:"Inter",sans-serif}
+.gallery-tab:hover,.gallery-tab.active{background:#8B0000;color:#fff;border-color:#8B0000;box-shadow:0 4px 12px rgba(139,0,0,.3)}
+.g-item{transition:transform .25s,box-shadow .25s;break-inside:avoid;margin-bottom:18px;border-radius:10px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.1);cursor:pointer}
+.g-item:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(0,0,0,.18)!important}
+.gtitle{font-size:.8rem;font-weight:700;color:#8B0000}
+.gdesc{font-size:.72rem;color:#666;margin-top:2px}
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:3000;align-items:center;justify-content:center;padding:20px}
+#lightbox.open{display:flex}
 </style>
 </head>
 <body>
@@ -280,6 +282,7 @@ nav{padding:0 16px}.nl li:not(.cta){display:none}
   </div>
   <ul class="nl">
     <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('gallery')" id="nav-gallery">Gallery</a></li>
     <li><a onclick="showPage('about')" id="nav-about">Our Team</a></li>
     <li><a onclick="showPage('services')" id="nav-services">Services Offered</a></li>
     <li><a onclick="showPage('contact')" id="nav-contact">Contact Us</a></li>
@@ -398,12 +401,29 @@ nav{padding:0 16px}.nl li:not(.cta){display:none}
         <h2 class="stitle">Master Your Financial Destiny With Us</h2>
         <div class="srule"></div>
         <p style="color:#1A1A1A;font-size:.93rem;line-height:1.85;margin-bottom:14px"><strong>R S KUMAR &amp; ASSOCIATES</strong> is a Chartered Accountant firm based in Chennai, established by CA. R. Sivakumar &amp; CA. S. Suraj Kumar.</p>
-        <p style="color:#1A1A1A;font-size:.93rem;line-height:1.85;margin-bottom:20px">We work closely with clients to understand their unique needs and provide customized solutions to help achieve their financial goals.</p>
+        <p style="color:#1A1A1A;font-size:.93rem;line-height:1.85;margin-bottom:20px">We work diligently with clients to understand their unique needs and provide customized solutions to help achieve their financial goals.</p>
         <button class="btn-gold" onclick="showPage('about')">Meet Our Team</button>
       </div>
     </div>
   </section>
 
+</div>
+
+<div class="page" id="page-gallery">
+  <div class="page-header">
+    <h1>Our Gallery</h1>
+    <p>A glimpse into our work, events, and office environment.</p>
+  </div>
+  <section class="sec" style="background:#F8F3EF">
+    <div class="con">
+      <div id="gallery-grid" style="columns:3;gap:18px;column-fill:balance">
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <div id="lightbox-content" style="max-width:700px;width:100%;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative"></div>
 </div>
 
 <div class="page" id="page-about">
@@ -815,7 +835,7 @@ nav{padding:0 16px}.nl li:not(.cta){display:none}
         <div class="aib">
           <h3>We're Here For You</h3>
           <p class="sub">Our team will get back to you within 24 hours.</p>
-          <div class="ir"><div class="iico">&#128205;</div><div><span class="ilbl">Address</span><span class="ival"><a href="https://share.google/vTZ0OOGOdO1gXUYs5" target="_blank" style="color:#ffffff;text-decoration:none">AP-345, 36th Street,<br>7th Sector, KK Nagar,<br>Chennai &ndash; 600 078</a><br><a href="https://share.google/vTZ0OOGOdO1gXUYs5" target="_blank" style="color:var(--gold-light);font-size:.75rem;font-weight:600;margin-top:4px;display:inline-block">&#128506; View on Google Maps</a></span></div></div>
+          <div class="ir"><div class="iico">&#128205;</div><div><span class="ilbl">Address</span><span class="ival"><a href="https://maps.app.goo.gl/RSWXDd6eoUiDJ2UFA" target="_blank" style="color:#ffffff;text-decoration:none">AP-345, 36th Street,<br>7th Sector, KK Nagar,<br>Chennai &ndash; 600 078</a><br><a href="https://maps.app.goo.gl/RSWXDd6eoUiDJ2UFA" target="_blank" style="color:var(--gold-light);font-size:.75rem;font-weight:600;margin-top:4px;display:inline-block">&#128506; View on Google Maps</a></span></div></div>
           <div class="ir"><div class="iico">&#128222;</div><div><span class="ilbl">Mobile</span><span class="ival"><a href="tel:9884344700">9884344700</a> | <a href="tel:9884054700">9884054700</a></span></div></div>
           <div class="ir"><div class="iico">&#9993;</div><div><span class="ilbl">Email</span><span class="ival"><a href="mailto:info@rskumar.in" style="color:#ffffff;text-decoration:none">info@rskumar.in</a></span></div></div>
           <div class="ir"><div class="iico">&#128336;</div><div><span class="ilbl">Office Hours</span><span class="ival">Monday &ndash; Friday, 10:00 AM &ndash; 6:00 PM</span></div></div>
@@ -853,7 +873,7 @@ nav{padding:0 16px}.nl li:not(.cta){display:none}
       <div style="font-family:'Merriweather',serif;color:#fff;font-size:1rem;font-weight:700;letter-spacing:1px">R S KUMAR &amp; ASSOCIATES</div>
       <p>Quality First, Last and Forever.<br>Trusted by 2000+ clients across the globe.</p>
     </div>
-    <div class="fc"><h4>Company</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('about')">Our Team</a></li><li><a onclick="showPage('services')">Services Offered</a></li><li><a onclick="showPage('contact')">Contact Us</a></li></ul></div>
+    <div class="fc"><h4>Company</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('gallery')">Gallery</a></li><li><a onclick="showPage('about')">Our Team</a></li><li><a onclick="showPage('services')">Services Offered</a></li><li><a onclick="showPage('contact')">Contact Us</a></li></ul></div>
     <div class="fc"><h4>Quick Links</h4><ul>
       <li><a href="https://www.icai.org" target="_blank">ICAI</a></li>
       <li><a href="https://www.incometax.gov.in" target="_blank">INCOME TAX</a></li>
@@ -864,7 +884,7 @@ nav{padding:0 16px}.nl li:not(.cta){display:none}
       <li><a href="https://www.oanda.com/currency-converter/" target="_blank">FOREIGN CURRENCY CONVERTER</a></li>
     </ul></div>
     <div class="fc"><h4>Contact</h4>
-      <div class="cl"><span>&#128205;</span><a href="https://share.google/vTZ0OOGOdO1gXUYs5" target="_blank" style="color:#C9A84C;text-decoration:none;font-size:.8rem;line-height:1.5">AP-345, 36th Street,<br>7th Sector, KK Nagar,<br>Chennai &ndash; 600 078</a></div>
+      <div class="cl"><span>&#128205;</span><a href="https://maps.app.goo.gl/RSWXDd6eoUiDJ2UFA" target="_blank" style="color:#C9A84C;text-decoration:none;font-size:.8rem;line-height:1.5">AP-345, 36th Street,<br>7th Sector, KK Nagar,<br>Chennai &ndash; 600 078</a></div>
       <div class="cl"><span>&#9993;</span><a href="mailto:info@rskumar.in" style="color:#C9A84C;text-decoration:none">info@rskumar.in</a></div>
       <div class="cl"><span>&#128222;</span><p>9884344700 | 9884054700</p></div>
     </div>
@@ -956,17 +976,47 @@ var fd=document.getElementById("fd");
 if(fd)fd.min=new Date().toISOString().split("T")[0];
 
 function subForm(){
-  var name = document.getElementById('fn').value.trim();
+  var name  = document.getElementById('fn').value.trim();
   var phone = document.getElementById('fp').value.trim();
-  var date = document.getElementById('fd').value;
-  var time = document.getElementById('fti').value;
-  if(!name || !phone || !date || !time){
-    alert('Please fill in all required fields (Name, Phone, Date and Time).');
-    return;
-  }
+  var date  = document.getElementById('fd') ? document.getElementById('fd').value : '';
+  if(!name){alert('Please enter your full name.');return;}
+  if(!phone){alert('Please enter your phone number.');return;}
+  if(!date){alert('Please select a preferred date.');return;}
   document.getElementById('fc').style.display='none';
   document.getElementById('fs2').style.display='block';
 }
+
+function filterGallery(btn,cat){
+  document.querySelectorAll('.gallery-tab').forEach(function(t){t.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.g-item').forEach(function(item){
+    item.style.display=(cat==='all'||item.dataset.cat===cat)?'':'none';
+  });
+}
+
+function openLightbox(el){
+  var visual=el.querySelector('div:first-child');
+  var title=el.querySelector('.gtitle');
+  var desc=el.querySelector('.gdesc');
+  var lbc=document.getElementById('lightbox-content');
+  lbc.innerHTML='<button onclick="closeLightbox()" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,.5);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;z-index:1">&#10005;</button>'
+    +visual.outerHTML
+    +'<div style="background:#fff;padding:20px 24px">'
+    +'<div style="font-size:1rem;font-weight:700;color:#8B0000">'+(title?title.textContent:'')+'</div>'
+    +'<div style="font-size:.85rem;color:#555;margin-top:4px">'+(desc?desc.textContent:'')+'</div>'
+    +'</div>';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeLightbox();closeModal();}
+});
 </script>
 </body>
 </html>
